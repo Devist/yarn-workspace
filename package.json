@@ -1,4 +1,10 @@
 {
   "name": "yarn-workspace",
+  "privae": true,
+  "workspaces": {
+    "packages": [
+      "package/*"
+    ]
+  },
   "packageManager": "yarn@3.4.1"
 }

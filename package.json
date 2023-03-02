@@ -3,7 +3,7 @@
   "privae": true,
   "workspaces": {
     "packages": [
-      "package/*"
+      "packages/**"
     ]
   },
   "packageManager": "yarn@3.4.1"

@@ -1,5 +1,8 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   export let todo;
+  const dispatch = createEventDispatcher();
 </script>
 
 <div class="stack-small">
@@ -19,7 +22,7 @@
     <button
       type="button"
       class="btn btn__danger"
-      on:click={() => alert("not implemented")}
+      on:click={() => dispatch("remove", todo)}
     >
       Delete <span class="visually-hidden">{todo.name}</span>
     </button>

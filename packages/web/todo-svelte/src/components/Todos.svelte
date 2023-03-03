@@ -61,7 +61,7 @@
   <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
     {#each filterTodos(filter, todos) as todo (todo.id)}
       <li class="todo">
-        <Todo {todo} />
+        <Todo {todo} on:remove={(e) => removeTodo(e.detail)} />
       </li>
     {:else}
       <li>아직 아무것도 없습니다.</li>

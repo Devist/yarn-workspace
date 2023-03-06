@@ -1,6 +1,7 @@
 <script>
   import FilterButton from "./FilterButton.svelte";
   import MoreActions from "./MoreActions.svelte";
+  import NewTodo from "./NewTodo.svelte";
   import Todo from "./Todo.svelte";
 
   export let todos = [];
@@ -18,13 +19,11 @@
       ? todos.filter((t) => t.completed)
       : todos;
 
-  function addTodo() {
-    todos = [...todos, { id: newTodoId, name: newTodoName, completed: false }];
+  function addTodo(name) {
+    todos = [...todos, { id: newTodoId, name, completed: false }];
 
     // todos.push({ id: 999, name: newTodoName, completed: false });
     // todos = todos;
-
-    newTodoName = "";
   }
 
   function removeTodo(todo) {
@@ -61,21 +60,7 @@
 
 <div class="todoapp stack-large">
   <!-- NewTodo -->
-  <form on:submit|preventDefault={addTodo}>
-    <h2 class="label-wrapper">
-      <label for="todo-0" class="label__lg"> To do list </label>
-    </h2>
-    <input
-      bind:value={newTodoName}
-      type="text"
-      id="todo-0"
-      autocomplete="off"
-      class="input input__lg"
-    />
-    <button type="submit" disabled="" class="btn btn__primary btn__lg">
-      추가하기
-    </button>
-  </form>
+  <NewTodo autofocus on:addTodo={(e) => addTodo(e.detail)} />
 
   <!-- Filter -->
   <FilterButton bind:filter />

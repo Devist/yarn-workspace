@@ -3,14 +3,14 @@
   import MoreActions from "./MoreActions.svelte";
   import NewTodo from "./NewTodo.svelte";
   import Todo from "./Todo.svelte";
+  import TodosStatus from "./TodosStatus.svelte";
 
   export let todos = [];
 
-  $: totalTodos = todos.length;
-  $: completedTodos = todos.filter((todo) => todo.completed).length;
-  $: newTodoId = totalTodos ? Math.max(...todos.map((t) => t.id)) + 1 : 1;
+  $: newTodoId = todos.length ? Math.max(...todos.map((t) => t.id)) + 1 : 1;
 
-  let newTodoName = "";
+  let todosStatus; // reference to TodosStatus instance
+
   let filter = "all";
   const filterTodos = (filter, todos) =>
     filter === "active"
@@ -28,6 +28,7 @@
 
   function removeTodo(todo) {
     todos = todos.filter((t) => t.id !== todo.id);
+    todosStatus.focus(); // give focus to status heading
   }
 
   function updateTodo(todo) {
@@ -66,7 +67,7 @@
   <FilterButton bind:filter />
 
   <!-- TodosStatus -->
-  <h2 id="list-heading">{completedTodos} / {totalTodos} 완료</h2>
+  <TodosStatus bind:this={todosStatus} {todos} />
 
   <!-- Todos -->
   <!-- To-dos -->

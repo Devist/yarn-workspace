@@ -44,6 +44,7 @@
     update({ completed: !todo.completed }); // updates todo status
   }
 
+  // 확인 : 수정하기 버튼 클릭 -> 키보드 tab 눌러 포커스 해제 -> 인풋 클릭 -> 전체 선택 되는 것 확인
   function selectOnFocus(node) {
     // node가 정의되었고, select()를 가졌는지 확인
     if (node && typeof node.select === "function") {

@@ -55,8 +55,10 @@
     todos = todos.map((t) => ({ ...t, completed }));
   };
 
-  const removeCompletedTodos = () =>
-    (todos = todos.filter((t) => !t.completed));
+  const removeCompletedTodos = () => {
+    todos = todos.filter((t) => !t.completed);
+    todosStatus.focus();
+  };
 </script>
 
 <div class="todoapp stack-large">

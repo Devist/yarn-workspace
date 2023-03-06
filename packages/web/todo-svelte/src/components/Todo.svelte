@@ -1,14 +1,15 @@
 <script>
-  import { createEventDispatcher, tick } from "svelte";
-  import { selectOnFocus } from "../actions/actions";
+  import { createEventDispatcher } from "svelte";
+  import { selectOnFocus, focusOnInit } from "../actions/actions";
 
   export let todo;
   const dispatch = createEventDispatcher();
 
   let editing = false; // track editing mode
 
-  let nameEl;
   let name = todo.name; // hold the name of the to-do being edited
+
+  let editButtonPressed = false;
 
   function update(updatedTodo) {
     todo = { ...todo, ...updatedTodo }; // applies modifications to todo
@@ -29,7 +30,10 @@
     dispatch("remove", todo); // emit remove event
   }
 
-  async function onEdit() {
+  const focusEditButton = (node) => editButtonPressed && node.focus();
+
+  function onEdit() {
+    editButtonPressed = true; // user pressed the Edit button, focus will come back to the Edit button
     editing = true; // enter editing mode
 
     // setTimeout(() => nameEl.focus(), 0); // 별로인 코드
@@ -37,8 +41,8 @@
     /**
      * 좋은 코드, svelte tick 활용
      */
-    await tick();
-    nameEl.focus();
+    // await tick();
+    // nameEl.focus();
   }
 
   function onToggle() {
@@ -60,8 +64,8 @@
         >
         <input
           bind:value={name}
-          bind:this={nameEl}
           use:selectOnFocus
+          use:focusOnInit
           type="text"
           id="todo-{todo.id}"
           autoComplete="off"
@@ -93,7 +97,7 @@
       <label for="todo-{todo.id}" class="todo-label">{todo.name}</label>
     </div>
     <div class="btn-group">
-      <button type="button" class="btn" on:click={onEdit}>
+      <button type="button" class="btn" on:click={onEdit} use:focusEditButton>
         수정하기<span class="visually-hidden"> {todo.name}</span>
       </button>
       <button type="button" class="btn btn__danger" on:click={onRemove}>
